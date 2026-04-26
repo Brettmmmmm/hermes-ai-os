@@ -14,6 +14,25 @@ This pipeline is a deterministic, AI-driven workflow that orchestrates:
 4. **Execution & Verification**  
    Runs the script, then re-invokes diagnostics to confirm resolution.
 
+## Skill Pack Structure
+
+The skill pack lives in:
+
+```
+tools/skill-packs/windows-update-repair/
+```
+
+It contains:
+
+- `skill.yaml` — skill definition
+- `prompts/system.md` — system prompt
+- `prompts/examples.md` — example inputs/outputs
+- `docs.md` — documentation for internal use
+
+## Pipeline Flow
+
+See `/diagrams/mermaid/windows-update-repair.mmd` and `/diagrams/drawio/windows-update-repair.drawio` for the full flow.
+
 ## Deterministic Output Format
 
 Every invocation produces:
