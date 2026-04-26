@@ -1,0 +1,11 @@
+id: remediation
+description: "Deterministic repair planning"
+personality: operator
+model: ollama:kimi-k2.5:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Goal"
+    - "Plan"
+    - "Steps"
+    - "Verification"

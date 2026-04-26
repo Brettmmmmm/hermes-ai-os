@@ -1,0 +1,9 @@
+id: summarisation
+description: "Fast summarisation"
+personality: researcher
+model: openai:gpt-4.1-mini
+policy:
+  format: "markdown"
+  structure:
+    - "Summary"
+    - "Key Points"

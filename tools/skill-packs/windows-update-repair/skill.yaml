@@ -1,0 +1,35 @@
+id: windows-update-repair
+name: "Windows Update Repair"
+description: "Deterministic, AI-driven Windows Update diagnostics and remediation"
+entrypoint: "prompts/system.md"
+
+personality: operator
+model: ollama:kimi-k2.5:cloud
+
+policy:
+  format: markdown
+  structure:
+    - "Goal"
+    - "Diagnostics Summary"
+    - "Root Cause"
+    - "Remediation Plan"
+    - "PowerShell Script"
+    - "Verification Steps"
+    - "Post-Checks"
+
+inputs:
+  - name: system_state
+    type: string
+    required: true
+  - name: logs
+    type: string
+    required: false
+  - name: error_codes
+    type: list
+    required: false
+
+outputs:
+  - name: remediation_script
+    type: string
+  - name: verification_steps
+    type: list

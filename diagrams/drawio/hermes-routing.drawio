@@ -1,0 +1,57 @@
+<mxfile host="app.diagrams.net">
+<diagram id="hermes-routing" name="Hermes Routing">
+<mxGraphModel dx="1420" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1">
+<root>
+<mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="input" value="User Prompt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+<mxGeometry x="60" y="200" width="140" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="classify" value="Intent Classifier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+<mxGeometry x="240" y="200" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="skillDiag" value="Diagnostics Skill" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+<mxGeometry x="460" y="60" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="skillRem" value="Remediation Skill" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+<mxGeometry x="460" y="150" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="skillCode" value="Codegen Skill" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+<mxGeometry x="460" y="240" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="skillPlan" value="Planning Skill" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+<mxGeometry x="460" y="330" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="skillSum" value="Summarisation Skill" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+<mxGeometry x="460" y="420" width="160" height="60" as="geometry"/>
+</mxCell>
+<mxCell id="pAnalyst" value="Personality: analyst" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+<mxGeometry x="660" y="60" width="180" height="50" as="geometry"/>
+</mxCell>
+<mxCell id="mKimi" value="Model: kimi-k2.5:cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1">
+<mxGeometry x="880" y="60" width="200" height="50" as="geometry"/>
+</mxCell>
+<mxCell id="pOperator" value="Personality: operator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+<mxGeometry x="660" y="150" width="180" height="50" as="geometry"/>
+</mxCell>
+<mxCell id="pCoder" value="Personality: coder" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+<mxGeometry x="660" y="240" width="180" height="50" as="geometry"/>
+</mxCell>
+<mxCell id="mDeepseek" value="Model: deepseek-r1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1">
+<mxGeometry x="880" y="240" width="200" height="50" as="geometry"/>
+</mxCell>
+<mxCell id="e1" edge="1" source="input" target="classify" parent="1"/>
+<mxCell id="e2" edge="1" source="classify" target="skillDiag" parent="1"/>
+<mxCell id="e3" edge="1" source="classify" target="skillRem" parent="1"/>
+<mxCell id="e4" edge="1" source="classify" target="skillCode" parent="1"/>
+<mxCell id="e5" edge="1" source="classify" target="skillPlan" parent="1"/>
+<mxCell id="e6" edge="1" source="classify" target="skillSum" parent="1"/>
+<mxCell id="e7" edge="1" source="skillDiag" target="pAnalyst" parent="1"/>
+<mxCell id="e8" edge="1" source="pAnalyst" target="mKimi" parent="1"/>
+<mxCell id="e9" edge="1" source="skillRem" target="pOperator" parent="1"/>
+<mxCell id="e10" edge="1" source="skillCode" target="pCoder" parent="1"/>
+<mxCell id="e11" edge="1" source="pCoder" target="mDeepseek" parent="1"/>
+</root>
+</mxGraphModel>
+</diagram>
+</mxfile>

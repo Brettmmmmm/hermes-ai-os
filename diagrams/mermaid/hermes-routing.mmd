@@ -1,0 +1,13 @@
+flowchart TD
+    Input[User Prompt] --> Classify[Classify Intent]
+    Classify -->|diagnostics| SkillDiag[Diagnostics Skill]
+    Classify -->|remediation| SkillRem[Remediation Skill]
+    Classify -->|codegen| SkillCode[Codegen Skill]
+    Classify -->|planning| SkillPlan[Planning Skill]
+    Classify -->|summarisation| SkillSum[Summarisation Skill]
+    SkillDiag --> P1[Personality: analyst]
+    SkillDiag --> M1[Model: kimi-k2.5:cloud]
+    SkillRem --> P2[Personality: operator]
+    SkillRem --> M2[Model: kimi-k2.5:cloud]
+    SkillCode --> P3[Personality: coder]
+    SkillCode --> M3[Model: deepseek-r1]

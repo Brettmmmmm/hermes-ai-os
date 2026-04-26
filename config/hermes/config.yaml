@@ -1,0 +1,49 @@
+version: 1
+
+# ============================================================
+#  GLOBAL SETTINGS
+# ============================================================
+default_personality: architect
+default_model: ollama:kimi-k2.5:cloud
+log_level: info
+telemetry: false
+cache_responses: true
+max_history: 20
+
+# ============================================================
+#  MODEL ROUTING
+# ============================================================
+models:
+  ollama:kimi-k2.5:cloud:
+    provider: ollama
+    model: "kimi-k2.5:cloud"
+    temperature: 0.2
+    top_p: 0.9
+    max_tokens: 4096
+
+  ollama:deepseek-r1:
+    provider: ollama
+    model: "deepseek-r1"
+    temperature: 0.1
+    max_tokens: 4096
+
+  openai:gpt-4.1-mini:
+    provider: openai
+    model: "gpt-4.1-mini"
+    temperature: 0.3
+    max_tokens: 4096
+
+routing:
+  summarisation: openai:gpt-4.1-mini
+  diagnostics: ollama:kimi-k2.5:cloud
+  remediation: ollama:kimi-k2.5:cloud
+  codegen: ollama:deepseek-r1
+  planning: ollama:kimi-k2.5:cloud
+
+# ============================================================
+#  INCLUDE PATHS
+# ============================================================
+include:
+  personalities_dir: "./personalities"
+  skills_dir: "./skills"
+  profiles_dir: "../profiles"

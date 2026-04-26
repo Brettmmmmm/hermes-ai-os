@@ -1,0 +1,11 @@
+id: planning
+description: "Architectural planning and design"
+personality: architect
+model: ollama:kimi-k2.5:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Objective"
+    - "Constraints"
+    - "Design"
+    - "Risks"

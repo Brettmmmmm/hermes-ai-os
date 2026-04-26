@@ -1,0 +1,11 @@
+id: diagnostics
+description: "Structured system diagnostics"
+personality: analyst
+model: ollama:kimi-k2.5:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Symptoms"
+    - "Root Cause"
+    - "Evidence"
+    - "Remediation"

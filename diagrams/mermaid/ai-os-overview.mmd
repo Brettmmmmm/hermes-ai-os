@@ -1,0 +1,15 @@
+flowchart LR
+    User[User / CLI / Editor] --> Hermes[Hermes Orchestration Layer]
+    Hermes -->|Task classification| Skills[Skills Router]
+    Hermes -->|Profile selection| Profiles[Execution Profiles]
+    Skills --> Diagnostics[Diagnostics Skill]
+    Skills --> Remediation[Remediation Skill]
+    Skills --> Codegen[Codegen Skill]
+    Skills --> Planning[Planning Skill]
+    Skills --> Summarisation[Summarisation Skill]
+    Hermes --> Models[Model Router]
+    Models --> Ollama[Ollama<br/>kimi-k2.5:cloud<br/>deepseek-r1]
+    Models --> Cloud[Cloud LLMs<br/>(optional)]
+    Diagnostics --> Systems[Target Systems<br/>Windows / Linux / Services]
+    Remediation --> Systems
+    Codegen --> Repos[Repos / Scripts]

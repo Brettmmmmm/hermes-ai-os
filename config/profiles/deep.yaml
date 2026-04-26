@@ -1,0 +1,3 @@
+id: deep
+model: ollama:kimi-k2.5:cloud
+temperature: 0.1

@@ -1,0 +1,11 @@
+flowchart TD
+    Start[User: "Fix Windows Update"] --> Profile[Select Profile: secure]
+    Profile --> Step1[Diagnostics Skill<br/>(analyst + kimi-k2.5:cloud)]
+    Step1 --> Out1[Structured report:<br/>Symptoms / Root Cause / Evidence]
+    Out1 --> Step2[Remediation Skill<br/>(operator)]
+    Step2 --> Plan[Plan:<br/>Goal / Plan / Steps / Verification]
+    Plan --> Step3[Codegen Skill<br/>(coder + deepseek-r1)]
+    Step3 --> Script[Generated PS scripts / runbooks]
+    Script --> Step4[Execution & Verification]
+    Step4 --> Step5[Diagnostics Skill<br/>(re-run)]
+    Step5 --> End[Status: Resolved / Escalate]

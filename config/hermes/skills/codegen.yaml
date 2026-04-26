@@ -1,0 +1,10 @@
+id: codegen
+description: "High-quality code generation"
+personality: coder
+model: ollama:deepseek-r1
+policy:
+  format: "markdown"
+  structure:
+    - "Context"
+    - "Code"
+    - "Explanation"
