@@ -1,0 +1,323 @@
+# Enterprise Architecture Capability Map
+# Domain: Cloud Infrastructure
+#
+# This YAML file defines the capability taxonomy for the Cloud Infrastructure domain.
+# Each capability has sub-capabilities, current maturity, target maturity, and notes.
+# Use this as both an assessment tool and a planning artifact.
+#
+# Maturity Levels (aligned with CMMI-based EA maturity):
+#   1 - Initial:      Ad-hoc, hero-dependent, reactive
+#   2 - Managed:      Repeatable processes, basic automation, documented
+#   3 - Defined:      Standardised across the organisation, measured, governed
+#   4 - Optimised:    Continuous improvement, predictive, self-service, AI-augmented
+#
+# Version: 2026-Q2
+# Author:  Brett Moore, Principal Enterprise Architect
+# Scope:   InfraForesight / VoxFlow Cloud Infrastructure
+
+domain:
+  name: "Cloud Infrastructure"
+  description: >
+    Foundational infrastructure capabilities that underpin the VoxFlow CPaaS
+    platform across AWS, Azure, and GCP. Includes compute, networking, storage,
+    and security sub-domains. All capabilities are measured against the need to
+    support real-time media workloads, six-class DSCP QoS enforcement, and
+    multi-cloud portability.
+  owner: "Head of Platform Engineering"
+  last_reviewed: "2026-04-15"
+
+  capabilities:
+
+    # -------------------------------------------------------------------
+    # COMPUTE
+    # -------------------------------------------------------------------
+    - id: "compute"
+      name: "Compute Orchestration"
+      description: >
+        Provision, schedule, scale, and operate compute resources for
+        containerised and VM-based workloads across multiple cloud providers.
+      sub_capabilities:
+
+        - id: "compute.container-orchestration"
+          name: "Container Orchestration"
+          current_maturity: 3  # Defined
+          target_maturity: 4   # Optimised
+          gap: >
+            Achieve horizontal pod autoscaling based on custom QoS metrics
+            (DSCP queue depth), implement pod priority and preemption for
+            real-time media workloads, and achieve multi-cluster workload
+            scheduling.
+          current_state: >
+            Kubernetes (EKS/AKS/GKE) in production across all three clouds.
+            Cilium CNI deployed. Flux CD for GitOps in staging. HPA based on
+            CPU/memory. Manual cluster provisioning via Terraform.
+          evidence:
+            - "ADR-001: Adopt Kubernetes as Container Orchestration Platform"
+            - "K8s clusters: 9 (3 clouds × 3 environments)"
+            - "99.5% pod scheduling success rate"
+          recommendations:
+            - "Implement KEDA for event-driven scaling of analytics pipeline"
+            - "Deploy Flux CD to production by 2026-Q3"
+            - "Evaluate Cluster API for declarative cluster lifecycle management"
+
+        - id: "compute.serverless-execution"
+          name: "Serverless Execution"
+          current_maturity: 2  # Managed
+          target_maturity: 3   # Defined
+          gap: >
+            Standardise serverless usage across clouds; implement cost
+            governance; evaluate Wasm-based serverless for signalling
+            workloads.
+          current_state: >
+            Ad-hoc usage of AWS Lambda and Azure Functions for non-critical
+            glue logic (CDR archiving, health check pings). No consistent
+            framework, deployment patterns, or cost controls.
+          recommendations:
+            - "Define serverless governance policy by 2026-Q3"
+            - "Evaluate WebAssembly (Spin) on Kubernetes for fast-start signalling functions"
+
+        - id: "compute.vm-management"
+          name: "VM Management (Legacy)"
+          current_maturity: 3  # Defined
+          target_maturity: 2   # Managed (deliberately reducing — migrating to containers)
+          gap: >
+            Shrink VM footprint as workloads migrate to K8s. Maintain only
+            where containers are not viable (e.g., FreeSWITCH with kernel-bypass).
+          current_state: >
+            ~40 VMs across clouds running FreeSWITCH media workers (bare-metal
+            performance sensitivity) and legacy support services. Managed via
+            Terraform. Packer-built golden images. CentOS 7 EOL migration in
+            progress.
+          recommendations:
+            - "Complete CentOS 7 → Rocky Linux 9 migration by 2026-Q4"
+            - "Evaluate DPDK/XDP acceleration for containerised FreeSWITCH to reduce VM dependency"
+
+    # -------------------------------------------------------------------
+    # NETWORK
+    # -------------------------------------------------------------------
+    - id: "network"
+      name: "Network Services"
+      description: >
+        Multi-cloud network fabric providing connectivity, QoS enforcement,
+        traffic engineering, and service exposure for VoxFlow workloads.
+      sub_capabilities:
+
+        - id: "network.qos-enforcement"
+          name: "QoS Enforcement (DSCP Marking)"
+          current_maturity: 3   # Defined
+          target_maturity: 4    # Optimised
+          gap: >
+            Extend six-class DSCP model from K8s pod-to-pod to full end-to-end
+            including cloud backbone egress; implement bandwidth assurance
+            (not just marking); add automated QoS policy drift detection.
+          current_state: >
+            Cilium eBPF enforces six-class DSCP model (EF/46, AF41/34, CS3/24,
+            AF21/18, AF31/26, BE/0) for all pod-to-pod traffic. NetworkPolicy
+            enforces per-microservice QoS class. Hubble provides per-flow
+            observability. Cloud egress still best-effort.
+          evidence:
+            - "Six-Class DSCP Model: documented and enforced"
+            - "CiliumNetworkPolicy: 47 policies across all namespaces"
+            - "Hubble flow logs: 2M+ flows/day with DSCP metadata"
+          recommendations:
+            - "Implement eBPF bandwidth manager for per-class rate limiting by 2026-Q3"
+            - "Negotiate DSCP transparency with cloud providers (AWS, Azure, GCP) for cross-AZ traffic"
+            - "Build QoS policy drift detector comparing Cilium state vs Git manifests"
+
+        - id: "network.cross-cloud-connectivity"
+          name: "Cross-Cloud Connectivity"
+          current_maturity: 2   # Managed
+          target_maturity: 3    # Defined
+          gap: >
+            Standardise VPN mesh topology; implement SD-WAN or cloud-native
+            interconnect; achieve consistent QoS preservation across cloud
+            boundaries.
+          current_state: >
+            Site-to-site VPN tunnels between AWS-Azure and AWS-GCP (hub-spoke
+            via AWS). Manual tunnel configuration per cloud. No QoS preservation
+            across tunnels. Monthly tunnel flap incidents averaging 3/minor.
+          recommendations:
+            - "Evaluate Equinix Fabric / Megaport for Layer 2 interconnect"
+            - "Implement WireGuard mesh overlay for consistent encryption + QoS"
+            - "ADR required: Cross-Cloud Connectivity Strategy"
+
+        - id: "network.load-balancing"
+          name: "Load Balancing & Traffic Management"
+          current_maturity: 3   # Defined
+          target_maturity: 3    # Defined (adequate for current needs)
+          current_state: >
+            Cloud-native LBs (NLB, Azure LB, GCP LB) for ingress. NGINX
+            Ingress in K8s with custom DSCP annotation support. Kamailio
+            dispatcher for SIP-aware load distribution. Latency-based routing
+            for media workers within each cloud.
+          recommendations:
+            - "Implement global traffic management for cross-region failover by 2026-Q4"
+            - "Evaluate Cilium L7-aware load balancing as NGINX alternative"
+
+        - id: "network.service-mesh"
+          name: "Service Mesh"
+          current_maturity: 2   # Managed
+          target_maturity: 3    # Defined
+          gap: >
+            Fully deploy Cilium Service Mesh to replace mTLS hand-rolled
+            certificates; implement traffic splitting for canary deployments;
+            enable mesh-wide QoS observability.
+          current_state: >
+            Cilium Service Mesh in staging only. mTLS via manually-managed
+            cert-manager certificates in production. No traffic splitting.
+            Observability limited to Hubble + Prometheus metrics.
+          recommendations:
+            - "Promote Cilium Service Mesh to production by 2026-Q3"
+            - "Integrate SPIFFE/SPIRE for workload identity (currently in TRIAL)"
+
+    # -------------------------------------------------------------------
+    # STORAGE
+    # -------------------------------------------------------------------
+    - id: "storage"
+      name: "Storage Services"
+      description: >
+        Persistent and ephemeral storage for databases, message queues, session
+        state, and analytics workloads across all environments.
+      sub_capabilities:
+
+        - id: "storage.block-and-file"
+          name: "Block & File Storage"
+          current_maturity: 3   # Defined
+          target_maturity: 3    # Defined
+          current_state: >
+            Cloud-native CSI drivers (EBS, Azure Disk, GCE PD) for K8s
+            persistent volumes. Storage classes defined per cloud with
+            encryption-at-rest enabled. Snapshot-based backup for TimescaleDB
+            and PostgreSQL. Daily snapshots with 30-day retention.
+          recommendations:
+            - "Implement cross-cloud volume replication for DR scenarios"
+            - "Evaluate Portworx for unified multi-cloud storage abstraction"
+
+        - id: "storage.object-storage"
+          name: "Object Storage"
+          current_maturity: 3   # Defined
+          target_maturity: 3    # Defined
+          current_state: >
+            S3 (AWS), Azure Blob, GCS for CDR archives, media recordings,
+            logs, and Terraform state. Lifecycle policies for tiering (hot →
+            cool → archive). Versioning enabled on all CDR buckets. Pre-signed
+            URLs for secure partner access.
+          recommendations:
+            - "Implement S3-compatible abstraction layer for multi-cloud portability"
+            - "Evaluate MinIO on K8s for edge/on-prem object storage"
+
+        - id: "storage.data-protection"
+          name: "Data Protection & Backup"
+          current_maturity: 2   # Managed
+          target_maturity: 3    # Defined
+          gap: >
+            Standardise backup tooling and RPO/RTO SLAs; implement automated
+            restore testing; achieve immutability for ransomware protection.
+          current_state: >
+            Mix of cloud-native snapshots and Velero for K8s resources. RPO
+            varies: 1 hour (TimescaleDB), 24 hours (object storage). Restore
+            testing is manual and ad-hoc. No immutability strategy.
+          recommendations:
+            - "Standardise on Velero for all K8s backup/restore"
+            - "Define RPO/RTO SLAs per data classification tier"
+            - "Implement automated quarterly restore testing"
+
+    # -------------------------------------------------------------------
+    # SECURITY
+    # -------------------------------------------------------------------
+    - id: "security"
+      name: "Infrastructure Security"
+      description: >
+        Identity, access, network security, secrets management, and compliance
+        controls for the multi-cloud infrastructure footprint.
+      sub_capabilities:
+
+        - id: "security.identity-and-access"
+          name: "Identity & Access Management"
+          current_maturity: 3   # Defined
+          target_maturity: 4    # Optimised
+          gap: >
+            Implement just-in-time access; move to workload identity (SPIFFE);
+            extend zero-trust to all infrastructure access paths.
+          current_state: >
+            SSO via Okta integrated with AWS IAM Identity Center, Azure AD,
+            GCP Cloud Identity. IAM roles federated. Machine-to-machine auth
+            via static API keys and manually-managed mTLS certs. No JIT access.
+          recommendations:
+            - "Deploy SPIFFE/SPIRE for workload identity (promote from TRIAL)"
+            - "Implement Teleport or Boundary for just-in-time infrastructure access"
+            - "Rotate all static API keys to time-limited tokens by 2026-Q4"
+
+        - id: "security.network-security"
+          name: "Network Security & Segmentation"
+          current_maturity: 3   # Defined
+          target_maturity: 4    # Optimised
+          gap: >
+            Achieve identity-aware microsegmentation via Cilium; implement
+            DNS-layer security; add egress filtering with threat intelligence.
+          current_state: >
+            CiliumNetworkPolicy for pod-level segmentation. Cloud-native
+            security groups. WAF on all public ingress. No DNS-layer security.
+            Egress is largely unrestricted within VPC/VNet boundaries.
+          evidence:
+            - "47 CiliumNetworkPolicies enforcing namespace-level isolation"
+            - "WAF protecting all 5 public-facing endpoints"
+          recommendations:
+            - "Implement Cilium DNS-aware policies to block C2/CnC domains"
+            - "Add egress Gateway to enforce allowed external destinations"
+            - "Deploy network anomaly detection using Hubble metrics"
+
+        - id: "security.secrets-management"
+          name: "Secrets Management"
+          current_maturity: 2   # Managed
+          target_maturity: 3    # Defined
+          gap: >
+            Eliminate secrets in Git; implement automated rotation; use
+            external secrets operator for K8s-native integration.
+          current_state: >
+            Mix of AWS Secrets Manager, Azure Key Vault, and GCP Secret
+            Manager. K8s secrets managed via Sealed Secrets (staging) and
+            manual kubectl (production — unacceptable). Rotation is manual.
+          recommendations:
+            - "Deploy External Secrets Operator to production by 2026-Q3"
+            - "Implement automated rotation for all database credentials"
+            - "Audit and remove any hardcoded secrets from Git history"
+
+        - id: "security.compliance-and-audit"
+          name: "Compliance & Audit"
+          current_maturity: 2   # Managed
+          target_maturity: 3    # Defined
+          gap: >
+            Achieve continuous compliance monitoring; automate evidence
+            collection for SOC2/ISO27001; implement policy-as-code.
+          current_state: >
+            Annual SOC2 Type II audit passed. Evidence collection is manual
+            and spreadsheet-based. Cloud security posture managed via AWS
+            Security Hub + Azure Security Center. No policy-as-code.
+          recommendations:
+            - "Implement Open Policy Agent (OPA) / Kyverno for policy-as-code"
+            - "Deploy Prowler or Steampipe for continuous compliance scanning"
+            - "Automate evidence collection for 80% of SOC2 controls by 2026-Q4"
+
+
+# -------------------------------------------------------------------
+# CAPABILITY SUMMARY
+# -------------------------------------------------------------------
+summary:
+  total_capabilities: 4
+  total_sub_capabilities: 12
+  average_maturity: 2.51  # Between Managed and Defined
+
+  maturity_distribution:
+    level_1_initial: 0
+    level_2_managed: 3    # Serverless, DR/Backup, Compliance
+    level_3_defined: 9    # K8s, VMs, QoS, LB, Block/File, Object, IAM, NetSec, Secrets
+    level_4_optimised: 0
+
+  priority_gaps:
+    - "Secrets Management: manual rotation and secrets-in-Git risk"
+    - "Service Mesh: no mTLS in production without manual cert management"
+    - "Cross-Cloud Connectivity: no standardised QoS-preserving interconnect"
+    - "Compliance: manual evidence collection is unsustainable for SOC2"
+
+  next_review: "2026-07-15"

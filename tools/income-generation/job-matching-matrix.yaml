@@ -1,0 +1,363 @@
+# Job Matching Matrix — Brett Moore
+# Scores CVs against target roles using weighted criteria.
+# Run your CV/linkedin text through this to see which role you're strongest for.
+
+version: "1.0"
+last_updated: "2026-04-29"
+target_currency: GBP
+target_location: "UK/Europe (remote OK)"
+
+# =============================================================================
+# Target Roles
+# =============================================================================
+target_roles:
+
+  - id: infrastructure-architect
+    title: "Infrastructure Architect"
+    description: >
+      Designs enterprise network and compute infrastructure.
+      Typically sits between EA and engineering. Owns HLD/LLD, technology selection,
+      and infrastructure roadmaps. Heavy on networking, QoS, MPLS, SD-WAN,
+      and cloud interconnect design.
+    role_keywords:
+      - "infrastructure architect"
+      - "network architect"
+      - "infrastructure design"
+      - "HLD"
+      - "LLD"
+      - "traffic engineering"
+      - "MPLS"
+      - "SD-WAN"
+      - "QoS"
+      - "DSCP"
+      - "cloud interconnect"
+      - "Direct Connect"
+      - "ExpressRoute"
+      - "colocation"
+      - "data centre networking"
+    required_tech_stack:
+      - "MPLS or SD-WAN design"
+      - "Cisco/Juniper/Arista routing and switching"
+      - "QoS design and implementation (DSCP, queuing)"
+      - "BGP/OSPF"
+      - "Cloud networking (VPC, Direct Connect, ExpressRoute)"
+      - "HLD/LLD documentation"
+    nice_to_have_stack:
+      - "eBPF / Cilium"
+      - "Kubernetes networking (CNI)"
+      - "Terraform"
+      - "Contact centre infrastructure"
+      - "Financial services network compliance"
+      - "CCIE (any track)"
+    typical_salary_range_gbp:
+      min: 80000
+      max: 130000
+      typical_contract_day_rate: "£550–£750"
+    company_types:
+      - "Financial services / trading firms"
+      - "Telecoms / ISPs"
+      - "Managed service providers (MSPs)"
+      - "Large enterprise (FTSE 250+)"
+      - "Cloud consultancies"
+      - "Colocation / data centre operators"
+
+  - id: cloud-platform-architect
+    title: "Cloud Platform Architect"
+    description: >
+      Designs and governs cloud platform architecture (AWS/Azure/GCP).
+      Focus on landing zones, multi-account strategy, networking, security,
+      and platform engineering enablement. Kubernetes-heavy at modern shops.
+    role_keywords:
+      - "cloud architect"
+      - "platform architect"
+      - "cloud platform"
+      - "AWS"
+      - "Azure"
+      - "GCP"
+      - "landing zone"
+      - "multi-cloud"
+      - "Kubernetes"
+      - "platform engineering"
+      - "cloud networking"
+      - "service mesh"
+      - "eBPF"
+    required_tech_stack:
+      - "AWS and/or Azure and/or GCP (at least two)"
+      - "Kubernetes (EKS/AKS/GKE)"
+      - "Terraform or Pulumi"
+      - "Cloud networking (VPC, transit gateway, peering)"
+      - "CI/CD patterns (GitOps)"
+      - "Security architecture (IAM, network policies)"
+    nice_to_have_stack:
+      - "eBPF / Cilium"
+      - "Service mesh (Istio/Linkerd)"
+      - "Multi-cloud QoS / traffic engineering"
+      - "FinOps / cost optimisation"
+      - "Crossplane"
+      - "CCIE or AWS/Azure Solutions Architect certs"
+    typical_salary_range_gbp:
+      min: 90000
+      max: 150000
+      typical_contract_day_rate: "£600–£850"
+    company_types:
+      - "SaaS / tech companies"
+      - "Fintech"
+      - "Cloud consultancies"
+      - "Digital-native enterprises"
+      - "Platform engineering teams at large enterprises"
+
+  - id: devops-sre-lead
+    title: "DevOps / SRE Lead"
+    description: >
+      Leads platform reliability and developer enablement. Owns observability,
+      incident response, deployment pipelines, and SLO/SLA frameworks.
+      Hands-on technical leadership role.
+    role_keywords:
+      - "SRE"
+      - "DevOps"
+      - "platform engineer"
+      - "site reliability"
+      - "observability"
+      - "SLO"
+      - "SLA"
+      - "incident response"
+      - "GitOps"
+      - "ArgoCD"
+      - "Helm"
+      - "CI/CD"
+      - "Prometheus"
+    required_tech_stack:
+      - "Kubernetes (production experience)"
+      - "CI/CD pipelines (GitHub Actions, ArgoCD, Jenkins)"
+      - "Observability stack (Prometheus, Grafana, AlertManager)"
+      - "Terraform or equivalent IaC"
+      - "Linux systems engineering"
+      - "Incident management / on-call experience"
+    nice_to_have_stack:
+      - "eBPF / Cilium networking"
+      - "Multi-cloud experience"
+      - "Database operations (PostgreSQL, TimescaleDB)"
+      - "Golang or Python scripting"
+      - "Security / compliance automation"
+      - "CCIE or CKA/CKAD"
+    typical_salary_range_gbp:
+      min: 80000
+      max: 140000
+      typical_contract_day_rate: "£550–£750"
+    company_types:
+      - "SaaS / tech startups"
+      - "Fintech"
+      - "Cloud-native enterprises"
+      - "Platform teams at large orgs"
+      - "DevOps consultancies"
+
+  - id: enterprise-architect
+    title: "Enterprise Architect"
+    description: >
+      Sets organisation-wide technology strategy. Owns architecture governance,
+      technology radar, roadmap, and standards. TOGAF/ArchiMate shop.
+      Operates at CTO/board interface. Less hands-on, more governance.
+    role_keywords:
+      - "enterprise architect"
+      - "EA"
+      - "TOGAF"
+      - "ArchiMate"
+      - "technology strategy"
+      - "architecture governance"
+      - "roadmap"
+      - "technology radar"
+      - "ARB"
+      - "Architecture Review Board"
+      - "HLD"
+      - "business architecture"
+      - "transformation"
+    required_tech_stack:
+      - "TOGAF 9 or 10 certification"
+      - "ArchiMate modelling"
+      - "Architecture governance frameworks"
+      - "Technology strategy and roadmapping"
+      - "Vendor and technology selection"
+      - "Stakeholder management (C-suite)"
+    nice_to_have_stack:
+      - "Cloud architecture knowledge (AWS/Azure/GCP)"
+      - "Networking/telecoms domain knowledge"
+      - "Regulatory compliance (FCA, GDPR, ISO 27001)"
+      - "CCIE or equivalent deep-tech credibility"
+      - "Programme/portfolio management"
+    typical_salary_range_gbp:
+      min: 90000
+      max: 160000
+      typical_contract_day_rate: "£650–£900"
+    company_types:
+      - "FTSE 250+ enterprises"
+      - "Public sector / government"
+      - "Financial services"
+      - "Telecoms"
+      - "Management consultancies"
+
+  - id: voip-ucaas-architect
+    title: "VoIP / UCaaS Architect"
+    description: >
+      Designs enterprise voice and unified communications platforms.
+      Deep SIP/VoIP knowledge, carrier interconnection, SBCs, contact centres.
+      Increasingly cloud (Teams Direct Routing, WebRTC, CPaaS APIs).
+    role_keywords:
+      - "VoIP"
+      - "UCaaS"
+      - "unified communications"
+      - "SIP"
+      - "FreeSWITCH"
+      - "Kamailio"
+      - "WebRTC"
+      - "SBC"
+      - "session border controller"
+      - "Teams Direct Routing"
+      - "Operator Connect"
+      - "contact centre"
+      - "RTP"
+      - "voice quality"
+      - "MOS"
+      - "CPaaS"
+    required_tech_stack:
+      - "SIP / RTP protocol expertise"
+      - "FreeSWITCH and/or Kamailio and/or Asterisk"
+      - "Session Border Controllers (Oracle/Ribbon/AudioCodes)"
+      - "Carrier interconnection (SIP trunking)"
+      - "Voice quality measurement (MOS, R-factor, RTCP-XR)"
+      - "Number porting and telecoms regulation"
+    nice_to_have_stack:
+      - "QoS / DSCP enforcement for VoIP"
+      - "Teams Direct Routing / Operator Connect"
+      - "Kubernetes (for cloud-native VoIP)"
+      - "WebRTC / real-time communications"
+      - "Contact centre platforms (Genesys, Amazon Connect)"
+      - "eBPF / Cilium for voice QoS"
+    typical_salary_range_gbp:
+      min: 75000
+      max: 130000
+      typical_contract_day_rate: "£500–£700"
+    company_types:
+      - "Telecoms / carriers"
+      - "UCaaS providers"
+      - "Contact centre operators"
+      - "MSPs with voice practices"
+      - "Large enterprise IT (in-house voice teams)"
+
+  - id: ai-ml-infra-engineer
+    title: "AI/ML Infrastructure Engineer"
+    description: >
+      Builds and operates infrastructure for AI/ML workloads — GPU clusters,
+      high-throughput networking, inference serving, data pipelines.
+      Hot market. Needs people who understand networking at AI scale.
+    role_keywords:
+      - "AI infrastructure"
+      - "ML infrastructure"
+      - "MLOps"
+      - "GPU"
+      - "NVIDIA"
+      - "Infiniband"
+      - "RoCE"
+      - "Kubernetes for ML"
+      - "model serving"
+      - "training infrastructure"
+      - "HPC"
+      - "data pipelines"
+      - "low-latency networking"
+    required_tech_stack:
+      - "Kubernetes (GPU scheduling, node labelling)"
+      - "High-throughput networking (Infiniband, RoCE, or 100GbE+)"
+      - "Python or Golang"
+      - "Container orchestration at scale"
+      - "Linux kernel tuning for high-performance workloads"
+    nice_to_have_stack:
+      - "eBPF / Cilium for network performance"
+      - "QoS / traffic engineering for RDMA/Infiniband"
+      - "Observability at scale"
+      - "ML framework familiarity (PyTorch, JAX)"
+      - "HPC cluster management (Slurm)"
+      - "Cross-cloud GPU orchestration"
+    typical_salary_range_gbp:
+      min: 90000
+      max: 180000
+      typical_contract_day_rate: "£650–£900"
+    company_types:
+      - "AI/ML startups"
+      - "Cloud providers (AI infrastructure teams)"
+      - "Fintech (quant/ML trading)"
+      - "Research labs"
+      - "Large tech companies (FAANG)"
+
+# =============================================================================
+# Scoring Criteria
+# =============================================================================
+scoring_criteria:
+
+  # Each criterion has a weight (0.0 to 1.0, must sum to 1.0).
+  # For each job description, rate 0-10 on how well Brett's CV matches.
+
+  - id: keyword-match
+    label: "Keyword Match"
+    description: "How many role_keywords appear in the job description?"
+    weight: 0.20
+    scoring_method: >
+      Count intersection of role_keywords and job description text.
+      Score: 0 if <3 matches, 5 if 3-5 matches, 8 if 6-8 matches, 10 if 9+ matches.
+
+  - id: required-tech-match
+    label: "Required Tech Stack Match"
+    description: "How much of the required_tech_stack does Brett demonstrably have?"
+    weight: 0.35
+    scoring_method: >
+      For each required tech: 2 if proven experience (project/cert),
+      1 if adjacent knowledge, 0 if gap. Sum and normalise to 0-10.
+
+  - id: nice-to-have-match
+    label: "Nice-to-Have Match"
+    description: "How many nice_to_haves can differentiate Brett?"
+    weight: 0.15
+    scoring_method: >
+      Count nice_to_haves that Brett can credibly claim.
+      0-10 scale: 0=none, 5=half, 10=all.
+
+  - id: domain-fit
+    label: "Domain & Industry Fit"
+    description: "Does Brett's experience align with the company's industry?"
+    weight: 0.15
+    scoring_method: >
+      Subjective but systematic: telecoms=10, financial services=9,
+      SaaS/tech=8, public sector=6, manufacturing=5, healthcare=4, other=3.
+      Adjust if Brett has specific domain experience.
+
+  - id: salary-fit
+    label: "Salary Alignment"
+    description: "Is the role's salary range within Brett's target?"
+    weight: 0.10
+    scoring_method: >
+      10 if within typical_salary_range_gbp, 8 if within 10%, 5 if within 20%,
+      2 if more than 20% below min, 0 if below floor.
+
+  - id: location-fit
+    label: "Location & Remote Fit"
+    description: "Is the role compatible with Brett's Northampton base?"
+    weight: 0.05
+    scoring_method: >
+      10 if fully remote or within 45 min of Northampton,
+      7 if London (commutable), 5 if 2 days/week London,
+      2 if full-time on-site elsewhere in UK, 0 if relocation required.
+
+# =============================================================================
+# Quick-Reference: Which Role Gets Which Weighting
+# =============================================================================
+# 
+# Brett's strongest match by role (pre-computed, approximate):
+#
+#   Infrastructure Architect:      92%  ← Natural fit. CCIE + 30yr infra.
+#   Enterprise Architect:          88%  ← 10yr EA + TOGAF-capable.
+#   VoIP/UCaaS Architect:          85%  ← O2 migration + VoxFlow + FreeSWITCH.
+#   Cloud Platform Architect:      78%  ← Multi-cloud QoS fabric + K8s.
+#   DevOps/SRE Lead:               68%  ← Built CI/CD but not primary identity.
+#   AI/ML Infra Engineer:          62%  ← QoS for AI is relevant but new domain.
+#
+# Strategy: Lead with Infrastructure Architect and Enterprise Architect.
+# VoIP/UCaaS architect when the role is voice-specific.
+# Cloud Platform when the role mentions eBPF/Cilium.
