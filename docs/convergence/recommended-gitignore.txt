@@ -1,0 +1,129 @@
+# =============================================================================
+# Recommended .gitignore Patterns for hermes-ai-os
+# =============================================================================
+# Date: 2026-04-29
+#
+# Copy the patterns below into the hermes-ai-os/.gitignore file.
+# These protect private data, runtime state, and secrets from being committed.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# HERMES RUNTIME -- NEVER COMMIT (contains API keys and secrets)
+# ---------------------------------------------------------------------------
+.hermes/
+.hermes/*
+.hermes/**/*
+
+# ---------------------------------------------------------------------------
+# ENVIRONMENT FILES -- may contain API keys, tokens, secrets
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.local.example
+!.env.*.example
+
+# ---------------------------------------------------------------------------
+# OPENCLAW CONFIGURATION -- contains auth tokens, personal data
+# ---------------------------------------------------------------------------
+.openclaw/
+.openclaw/*
+.openclaw/**/*
+openclaw.json
+
+# ---------------------------------------------------------------------------
+# PERSONAL DATA -- phone numbers, addresses, identity docs
+# ---------------------------------------------------------------------------
+# Memory files with personal context
+**/memory/*.md
+**/MEMORY.md
+**/USER.md
+**/HEARTBEAT.md
+**/DREAMS.md
+
+# ---------------------------------------------------------------------------
+# PULUMI STATE -- may contain cloud credentials in state
+# ---------------------------------------------------------------------------
+**/Pulumi.*.yaml
+**/pulumi/
+**/.pulumi/
+
+# ---------------------------------------------------------------------------
+# WIREGUARD -- private keys and client IPs
+# ---------------------------------------------------------------------------
+**/wg*.conf
+**/wireguard/*.conf
+
+# ---------------------------------------------------------------------------
+# DOCKER -- local overrides may have secrets
+# ---------------------------------------------------------------------------
+docker-compose.override.yml
+
+# ---------------------------------------------------------------------------
+# CREDENTIALS -- any file that might leak auth
+# ---------------------------------------------------------------------------
+**/credentials
+**/credentials.*
+**/*secret*
+**/*.pem
+**/*.key
+!**/*.pub
+**/id_rsa
+**/id_ed25519
+**/id_ecdsa
+
+# ---------------------------------------------------------------------------
+# SESSION LOGS -- may contain personal context injected by agents
+# ---------------------------------------------------------------------------
+**/session-corpus/
+**/*session*.txt
+**/*session*.json
+**/*session*.jsonl
+
+# ---------------------------------------------------------------------------
+# CRON AND HEARTBEAT STATE -- may reference personal infrastructure
+# ---------------------------------------------------------------------------
+**/cron.log
+**/heartbeat.log
+**/heartbeat-state.json
+**/workspace-state.json
+**/.openclaw/
+
+# ---------------------------------------------------------------------------
+# CHAT EXPORTS -- Copilot/Claude/Gemini chat logs contain personal data
+# ---------------------------------------------------------------------------
+**/Microsoft\ Copilot*
+**/copilot-*.html
+**/gemini-code-*
+**/claude-*.json
+**/chat-export*
+
+# ---------------------------------------------------------------------------
+# BACKUP ARCHIVES -- may bundle all of the above
+# ---------------------------------------------------------------------------
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+!tools/skill-packs/**/*.zip
+
+# ---------------------------------------------------------------------------
+# NOTES:
+#
+# 1. These patterns are CONSERVATIVE. They may exclude files you want to keep.
+#    Review and uncomment patterns as needed.
+#
+# 2. Files already committed CANNOT be protected by .gitignore alone.
+#    If you've already committed secrets, you MUST:
+#    a) Rotate the compromised keys/tokens immediately
+#    b) Use `git filter-branch` or BFG Repo-Cleaner to purge history
+#    c) Force push (coordinate with any collaborators first)
+#
+# 3. The .hermes/ runtime directory must NEVER be committed under any
+#    circumstances. It contains production API keys.
+#
+# 4. Brett's WhatsApp number (+447480265496) and personal details appear in
+#    multiple memory files. These should never enter a public repo.
+#
+# 5. WireGuard client IPs (10.200.200.x) reveal internal network topology.
+# =============================================================================
