@@ -1,112 +1,190 @@
-# Hermes AI OS Layer
+# Hermes AI OS
 
-> **Conversational orchestration for a deterministic, self-improving AI operating system.**
+> **An enterprise-grade AI operating system — not a chatbot with plugins.**
 
-Hermes is the bridge between you and your models. It handles **intent classification**, **personality selection**, **skill routing**, **model fallback**, and **deterministic policy enforcement** — so every output is structured, safe, and reproducible.
+Hermes AI OS is the unified intelligence layer that orchestrates infrastructure, provides enterprise architecture tooling, generates income, and operates autonomously across platforms. It thinks in personalities, routes through skills, and draws from a multi-model reasoning fabric.
 
 ---
 
-## Architecture Overview
+## What Hermes AI OS Is
+
+Hermes is the bridge between **intent and execution**. It classifies every incoming request, selects the right personality (system prompt + reasoning lens), routes to the optimal model, enforces deterministic output policy, and produces structured, verifiable results.
+
+But it's more than routing. Hermes IS the AI OS:
+
+| Layer | Function |
+|-------|----------|
+| **Personality Engine** | 7 tuned reasoning lenses: Architect, Coder, Analyst, Operator, Researcher, Advisor, Tutor |
+| **Skill Layer** | 8 deterministic skill contracts with enforced output structures |
+| **Model Fabric** | 11 models across Ollama cloud + OpenAI, each assigned to the right task |
+| **Domain Skills** | Enterprise Architecture, VoxFlow Operations, Income Generation, Hermes Mesh |
+| **Policy Enforcement** | Format, safety, and reproducibility guarantees on every output |
+| **Execution Profiles** | Fast, deep, or secure — trade speed for accuracy |
+| **Pipelines** | Chained skills for end-to-end autonomous workflows |
+| **Hermes Mesh** | QUIC-native, CRDT-based multi-agent orchestration fabric (Phase 4) |
+
+---
+
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        User / CLI / Editor                          │
-└──────────────────────────────────┬──────────────────────────────────┘
-                                   │
-                    ┌──────────────▼──────────────┐
-                    │   Intent Classifier         │
-                    └──────────────┬──────────────┘
-                                   │
-          ┌────────────────────────┼────────────────────────┐
-          │            ┌───────────▼────────────┐         │
-          │            │  Hermes Router           │         │
-          │            │  • Skill routing         │         │
-          │            │  • Personality switch    │         │
-          │            │  • Model fallback        │         │
-          │            │  • Policy enforcement    │         │
-          │            └───────────┬────────────┘         │
-          │                        │                      │
-   ┌──────▼──────┐      ┌─────────▼─────────┐   ┌───────▼───────┐
-   │   Skills    │      │   Personalities    │   │   Profiles    │
-   │ • diagnostics│      │ • architect        │   │ • fast        │
-   │ • remediation│     │ • coder            │   │ • deep        │
-   │ • codegen   │      │ • analyst          │   │ • secure      │
-   │ • planning  │      │ • operator         │   └───────────────┘
-   │ • summarise│       │ • researcher       │
-   └──────┬──────┘      └─────────┬─────────┘
-          │                       │
-          └───────────┬───────────┘
-                      │
-           ┌──────────▼──────────┐
-           │    Model Layer      │
-           ├─────────────────────┤
-           │ Ollama (local)      │
-           │  • kimi-k2.5:cloud  │
-           │  • deepseek-r1      │
-           ├─────────────────────┤
-           │ Cloud (fallback)    │
-           │  • gpt-4.1-mini     │
-           └─────────────────────┘
+│                       HERMES AI OS LAYER                             │
+│                                                                      │
+│   ┌─────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐           │
+│   │  CHAT   │  │   CRON   │  │   MESH   │  │   API    │           │
+│   │Telegram │  │Automation│  │Multi-Agent│  │ REST/WS  │           │
+│   │  CLI    │  │Briefings │  │Orchestr. │  │ Web UI   │           │
+│   └────┬────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘           │
+│        │            │             │              │                   │
+│   ┌────┴────────────┴─────────────┴──────────────┴─────┐           │
+│   │              PERSONALITY ENGINE                     │           │
+│   │  architect | coder | analyst | operator | researcher │          │
+│   │              advisor | tutor                         │          │
+│   └──────────────────────┬──────────────────────────────┘           │
+│                          │                                           │
+│   ┌──────────────────────┴──────────────────────────────┐           │
+│   │                   SKILL LAYER                        │           │
+│   │  diagnostics | codegen | planning | remediation      │           │
+│   │  enterprise-architecture | voxflow-operations        │           │
+│   │  income-generation | hermes-mesh                     │           │
+│   └──────────────────────┬──────────────────────────────┘           │
+│                          │                                           │
+│   ┌──────────────────────┴──────────────────────────────┐           │
+│   │                 MODEL FABRIC                         │           │
+│   │  DeepSeek v4 Pro | Kimi K2.6 | Qwen 3.5 | Kimi K2.5 │           │
+│   │  DeepSeek V3.1 671B | GLM-5 | MiniMax M2.7          │           │
+│   └──────────────────────┬──────────────────────────────┘           │
+│                          │                                           │
+│   ┌──────────────────────┴──────────────────────────────┐           │
+│   │            TOOLS & INTEGRATIONS                      │           │
+│   │  GitHub | Docker | Pulumi | K8s | Ollama | Email     │           │
+│   └─────────────────────────────────────────────────────┘           │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-Detailed diagrams:
-- [Mermaid: AI OS Overview](diagrams/mermaid/ai-os-overview.mmd)
-- [Mermaid: Hermes Routing](diagrams/mermaid/hermes-routing.mmd)
-- [Draw.io: AI OS Overview](diagrams/drawio/ai-os-overview.drawio)
-- [Draw.io: Hermes Routing](diagrams/drawio/hermes-routing.drawio)
+Detailed diagram: [Hermes Full Architecture](diagrams/mermaid/hermes-full-architecture.mmd)
 
 ---
 
-## What Hermes Provides
+## Personalities
 
-| Layer | What It Does |
-|-------|--------------|
-| **Personalities** | Tuned system prompts for architect, coder, analyst, operator, researcher roles |
-| **Skill Routing** | Maps intent to the right personality + model + output structure |
-| **Model Routing** | Local-first (Ollama) with optional cloud fallback |
-| **Policy Layers** | Enforces format, safety, and reproducibility on every output |
-| **Execution Profiles** | Fast, deep, or secure — trade speed for accuracy or safety |
-| **Skill Packs** | Reusable, signed, sandboxed bundles (e.g. Windows Update Repair) |
-| **Pipelines** | Chains skills into end-to-end deterministic workflows |
-| **PowerShell Module** | `Invoke-HermesSkill` and `Invoke-WindowsUpdateRepair` wrappers |
-| **CI/CD** | GitHub Actions validate YAML, package modules, and release on tags |
+Each personality is a tuned reasoning lens — a system prompt with an assigned default model.
+
+| ID | Role | Default Model | Best For |
+|----|------|---------------|----------|
+| `architect` | Enterprise Architect | deepseek-v4-pro:cloud | System design, risk assessment, ADRs |
+| `coder` | Code Engineer | deepseek-v3.1:671b-cloud | Script generation, implementations |
+| `analyst` | Systems Analyst | kimi-k2.6:cloud | Root cause analysis, diagnostics |
+| `operator` | Ops Engineer | kimi-k2.6:cloud | Runbooks, remediation, deployment |
+| `researcher` | Technical Researcher | qwen3.5:cloud | Summaries, comparisons, evidence |
+| `advisor` | Strategic Advisor | deepseek-v4-pro:cloud | Holistic analysis, second-order effects |
+| `tutor` | Expert Tutor | qwen3.5:cloud | Clear explanations, comprehension |
 
 ---
 
-## Directory Structure
+## Skills
+
+Skills are deterministic contracts: personality + model + enforced output structure.
+
+### Core Operational Skills
+
+| ID | Personality | Model | Output Structure |
+|----|-------------|-------|-----------------|
+| `diagnostics` | analyst | kimi-k2.6:cloud | Symptoms → Root Cause → Evidence → Remediation |
+| `remediation` | operator | kimi-k2.6:cloud | Goal → Plan → Steps → Verification |
+| `codegen` | coder | deepseek-v3.1:671b-cloud | Context → Code → Explanation |
+| `planning` | architect | deepseek-v4-pro:cloud | Objective → Constraints → Design → Risks |
+| `summarisation` | researcher | qwen3.5:cloud | Summary → Key Points |
+
+### Domain Skills
+
+| ID | Personality | Model | Purpose |
+|----|-------------|-------|---------|
+| `enterprise-architecture` | architect | deepseek-v4-pro:cloud | TOGAF, ArchiMate, ADRs, tech radar |
+| `voxflow-operations` | operator | kimi-k2.6:cloud | VoxFlow health, QoS compliance, deployment |
+| `income-generation` | analyst | kimi-k2.6:cloud | Consulting proposals, job matching, CVs |
+| `hermes-mesh` | architect | deepseek-v4-pro:cloud | Multi-agent orchestration fabric |
+
+---
+
+## The VoxFlow Connection
+
+VoxFlow (InfraForesight) is Brett Moore's QoS-aware enterprise CPaaS platform — 9 microservices, multi-cloud (AWS/Azure/GCP), eBPF DSCP marking, FreeSWITCH + Kamailio. It is the primary infrastructure target Hermes AI OS manages.
+
+The `voxflow-operations` skill provides:
+- Automated health checks across all 9 services
+- QoS compliance verification (DSCP marking, Grafana dashboards)
+- Deployment and demo startup (<60 seconds)
+- Cross-cloud VPN tunnel health
+- Tenant API key rotation monitoring
+
+See [docs/docs/domain-skills/voxflow-operations.md](docs/docs/domain-skills/voxflow-operations.md) for the full operations playbook.
+
+---
+
+## Getting Started
+
+See [docs/docs/getting-started.md](docs/docs/getting-started.md) for the complete setup guide.
+
+### Quick Start
+
+```bash
+# Clone the repo
+git clone git@github.com:btfmo/hermes-ai-os.git
+cd hermes-ai-os
+
+# Validate configuration
+pip install yamllint
+yamllint config/hermes
+
+# (Future) Run a skill via the hermes CLI
+hermes run --skill diagnostics \
+  --input '{"system_state":"v2raya crash loop","logs":"port 2017 in use"}'
+```
+
+---
+
+## Repository Structure
 
 ```
 hermes-ai-os/
-├── README.md
+├── README.md                           ← You are here
+├── VISION.md                           ← Master vision & execution plan
+├── CLAUDE.md                           ← Guidance for Claude Code agents
 ├── LICENSE
-├── .gitignore
 │
 ├── config/
-│   └── hermes/
-│       ├── config.yaml              # Main routing + model config
-│       ├── personalities/           # 5 persona packs (yaml)
-│       │   ├── architect.yaml
-│       │   ├── coder.yaml
-│       │   ├── analyst.yaml
-│       │   ├── operator.yaml
-│       │   └── researcher.yaml
-│       └── skills/                # 5 skill definitions (yaml)
-│           ├── diagnostics.yaml
-│           ├── remediation.yaml
-│           ├── codegen.yaml
-│           ├── planning.yaml
-│           └── summarisation.yaml
+│   ├── hermes/
+│   │   ├── config.yaml                 ← Model registry + skill routing
+│   │   ├── personalities/             ← 7 personality packs
+│   │   │   ├── architect.yaml
+│   │   │   ├── coder.yaml
+│   │   │   ├── analyst.yaml
+│   │   │   ├── operator.yaml
+│   │   │   ├── researcher.yaml
+│   │   │   ├── advisor.yaml
+│   │   │   └── tutor.yaml
+│   │   └── skills/                    ← 8 skill definitions
+│   │       ├── diagnostics.yaml
+│   │       ├── remediation.yaml
+│   │       ├── codegen.yaml
+│   │       ├── planning.yaml
+│   │       ├── summarisation.yaml
+│   │       ├── enterprise-architecture.yaml
+│   │       ├── voxflow-operations.yaml
+│   │       └── income-generation.yaml
+│   └── profiles/                       ← Execution profiles
+│       ├── fast.yaml
+│       ├── deep.yaml
+│       └── secure.yaml
 │
-├── config/profiles/
-│   ├── fast.yaml                  # Low-latency, standard safety
-│   ├── deep.yaml                  # Maximum reasoning depth
-│   └── secure.yaml                # Zero-temperature, strict filtering
-│
-├── docs/                          # Docusaurus site (full documentation)
+├── docs/                               ← Docusaurus documentation site
 │   ├── docusaurus.config.ts
 │   ├── sidebars.ts
 │   └── docs/
 │       ├── index.md
+│       ├── getting-started.md
 │       ├── architecture/
 │       │   ├── overview.md
 │       │   ├── models-and-routing.md
@@ -116,129 +194,64 @@ hermes-ai-os/
 │       │   ├── coder.md
 │       │   ├── analyst.md
 │       │   ├── operator.md
-│       │   └── researcher.md
+│       │   ├── researcher.md
+│       │   ├── advisor.md
+│       │   └── tutor.md
 │       ├── skills/
 │       │   ├── diagnostics.md
 │       │   ├── remediation.md
 │       │   ├── codegen.md
 │       │   ├── planning.md
 │       │   └── summarisation.md
+│       ├── domain-skills/
+│       │   ├── enterprise-architecture.md
+│       │   ├── voxflow-operations.md
+│       │   └── income-generation.md
 │       └── pipelines/
 │           ├── overview.md
 │           ├── windows-update-repair.md
 │           └── ai-os-orchestration.md
 │
 ├── diagrams/
-│   ├── mermaid/                   # Text-based diagrams (render anywhere)
+│   ├── mermaid/
 │   │   ├── ai-os-overview.mmd
 │   │   ├── hermes-routing.mmd
+│   │   ├── hermes-full-architecture.mmd
 │   │   └── windows-update-repair.mmd
-│   └── drawio/                    # Editable Draw.io XML
+│   └── drawio/
 │       ├── ai-os-overview.drawio
 │       ├── hermes-routing.drawio
 │       └── windows-update-repair.drawio
 │
 ├── tools/
 │   ├── modules/
-│   │   └── Hermes.Orchestration/  # PowerShell module
+│   │   └── Hermes.Orchestration/
 │   │       ├── Hermes.Orchestration.psm1
 │   │       └── Hermes.Orchestration.psd1
 │   └── skill-packs/
-│       └── windows-update-repair/ # Example skill pack
+│       └── windows-update-repair/
 │           ├── skill.yaml
 │           └── prompts/
 │               ├── system.md
 │               └── examples.md
 │
 └── .github/workflows/
-    └── release.yml                # CI: validate, package, release
+    └── release.yml
 ```
-
----
-
-## Quick Start
-
-### Prerequisites
-
-- **Ollama** running locally with your desired models (e.g. `kimi-k2.5:cloud`, `deepseek-r1`)
-- Optional: **OpenAI API key** for cloud fallback
-- PowerShell 5.1+ (for the module)
-
-### Validate Config
-
-```bash
-pip install yamllint
-yamllint config/hermes
-yamllint tools/skill-packs
-```
-
-### Run a Skill
-
-```bash
-hermes run --skill diagnostics \
-  --input '{"system_state":"v2raya crash loop","logs":"port 2017 in use"}'
-```
-
-### Switch Profile
-
-```bash
-hermes run --skill planning --profile deep \
-  --input '{"objective":"Migrate v2raya from snap to Docker"}'
-```
-
-### PowerShell Module
-
-```powershell
-Import-Module ./tools/modules/Hermes.Orchestration
-Invoke-WindowsUpdateRepair -SystemState "WU failing" -ErrorCodes @("0x80070424")
-```
-
----
-
-## Personalities
-
-| ID | Role | Model | Best For |
-|----|------|-------|----------|
-| `architect` | Enterprise Architect | kimi-k2.5:cloud | System design, planning, risk assessment |
-| `coder` | Code Engineer | deepseek-r1 | Script generation, implementations |
-| `analyst` | Security Analyst | kimi-k2.5:cloud | Root cause analysis, threat modelling |
-| `operator` | Ops Engineer | kimi-k2.5:cloud | Runbooks, remediation, repair flows |
-| `researcher` | Technical Researcher | gpt-4.1-mini | Summaries, comparisons, evidence analysis |
-
----
-
-## Skills
-
-| ID | Personality | Model | Policy Structure |
-|----|-------------|-------|-----------------|
-| `diagnostics` | analyst | kimi-k2.5:cloud | Symptoms → Root Cause → Evidence → Remediation |
-| `remediation` | operator | kimi-k2.5:cloud | Goal → Plan → Steps → Verification |
-| `codegen` | coder | deepseek-r1 | Context → Code → Explanation |
-| `planning` | architect | kimi-k2.5:cloud | Objective → Constraints → Design → Risks |
-| `summarisation` | researcher | gpt-4.1-mini | Summary → Key Points |
 
 ---
 
 ## Execution Profiles
 
-| Profile | Temperature | Safety | Model | Use Case |
-|---------|-------------|--------|-------|----------|
-| `fast` | 0.2 | Standard | gpt-4.1-mini | Quick answers, low latency |
-| `deep` | 0.1 | Standard | kimi-k2.5:cloud | Complex reasoning, high accuracy |
-| `secure` | 0.0 | Strict | kimi-k2.5:cloud | Zero-tolerance, deterministic output |
+| Profile | Temperature | Safety | Use Case |
+|---------|-------------|--------|----------|
+| `fast` | 0.2 | Standard | Quick answers, low latency |
+| `deep` | 0.1 | Standard | Complex reasoning, high accuracy |
+| `secure` | 0.0 | Strict | Zero-tolerance, deterministic |
 
 ---
 
-## Pipelines
-
-| Pipeline | Skills Chained | Purpose |
-|----------|----------------|---------|
-| [Windows Update Repair](docs/docs/pipelines/windows-update-repair.md) | diagnostics → remediation → codegen → verification | Repair Windows Update |
-| [AI OS Orchestration](docs/docs/pipelines/ai-os-orchestration.md) | planning → codegen → diagnostics → summarisation | Self-improving AI OS |
-
----
-
-## Deterministic Guarantees
+## Policy Guarantees
 
 Hermes enforces three policy layers on every output:
 
@@ -258,15 +271,13 @@ On every `v*.*.*` tag:
 
 ---
 
-## Roadmap
+## About the Author
 
-- [ ] Real Hermes runtime daemon (event bus + queue)
-- [ ] WebSocket event stream
-- [ ] Plugin marketplace with signing + sandboxing
-- [ ] TUI dashboard (ratatui / bubbletea)
-- [ ] Web dashboard (React/Vue)
-- [ ] Mesh network sync (CRDT-based)
-- [ ] QUIC transport layer
+Hermes AI OS was built by **Brett Moore** (bm/btfmo), an enterprise infrastructure architect specializing in QoS-aware multi-cloud platforms, VoIP/CPaaS systems, and AI-driven operations.
+
+- **VoxFlow**: QoS-aware CPaaS platform (9 microservices, multi-cloud)
+- **InfraForesight**: Enterprise infrastructure consulting
+- **Focus**: AWS/Azure/GCP, FreeSWITCH, Kamailio, eBPF, Pulumi, Ollama
 
 ---
 

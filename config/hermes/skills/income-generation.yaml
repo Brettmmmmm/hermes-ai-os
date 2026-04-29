@@ -1,0 +1,20 @@
+id: income-generation
+description: "Revenue generation engine — consulting proposals, job matching, CV tailoring, competitive intelligence, personal brand building, and go-to-market automation"
+personality: analyst
+model: ollama:kimi-k2.6:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Opportunity"
+    - "Analysis"
+    - "Recommendation"
+    - "Action Plan"
+    - "Metrics"
+tags:
+  - income
+  - consulting
+  - jobs
+  - proposals
+  - cvs
+  - brand
+  - revenue

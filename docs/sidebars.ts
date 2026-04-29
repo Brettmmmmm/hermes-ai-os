@@ -1,6 +1,7 @@
 export default {
   docs: [
     'index',
+    'getting-started',
     {
       type: 'category',
       label: 'Architecture',
@@ -19,6 +20,8 @@ export default {
         'personalities/analyst',
         'personalities/operator',
         'personalities/researcher',
+        'personalities/advisor',
+        'personalities/tutor',
       ],
     },
     {
@@ -30,6 +33,15 @@ export default {
         'skills/codegen',
         'skills/planning',
         'skills/summarisation',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Domain Skills',
+      items: [
+        'domain-skills/enterprise-architecture',
+        'domain-skills/voxflow-operations',
+        'domain-skills/income-generation',
       ],
     },
     {

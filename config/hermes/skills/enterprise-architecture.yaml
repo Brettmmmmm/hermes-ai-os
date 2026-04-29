@@ -1,0 +1,24 @@
+id: enterprise-architecture
+description: "Enterprise architecture tooling — TOGAF, ArchiMate, ADRs, capability-based planning, technology radar, cloud architecture patterns"
+personality: architect
+model: ollama:deepseek-v4-pro:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Context"
+    - "Analysis"
+    - "Decision / Design"
+    - "Consequences"
+    - "References"
+domains:
+  - business
+  - data
+  - application
+  - technology
+tags:
+  - enterprise-architecture
+  - TOGAF
+  - ArchiMate
+  - ADR
+  - cloud
+  - infrastructure-patterns

@@ -1,0 +1,19 @@
+id: voxflow-operations
+description: "VoxFlow/InfraForesight platform operations — deployment, monitoring, QoS compliance, troubleshooting, and go-to-market for the enterprise CPaaS/uCaaS platform"
+personality: operator
+model: ollama:kimi-k2.6:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Platform Status"
+    - "Findings"
+    - "Actions"
+    - "Verification"
+tags:
+  - voxflow
+  - infraforesight
+  - qos
+  - sip
+  - voip
+  - cpaas
+  - operations

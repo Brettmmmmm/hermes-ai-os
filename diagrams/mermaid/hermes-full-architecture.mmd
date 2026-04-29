@@ -1,0 +1,166 @@
+graph TB
+    subgraph ENTRYPOINTS["Entry Points"]
+        direction LR
+        CLI["CLI<br/>hermesctl"]
+        TELEGRAM["Telegram Bot"]
+        CRON["Cron Jobs<br/>(11 scheduled)"]
+        WEB["Web UI<br/>(planned)"]
+        API["REST/WS API<br/>(planned)"]
+    end
+
+    subgraph HERMES_CORE["Hermes AI OS Core"]
+        direction TB
+        
+        INTENT["Intent Classifier<br/>& Dispatcher"]
+        
+        subgraph PERSONALITY_ENGINE["Personality Engine"]
+            direction LR
+            P_ARCHITECT["architect<br/>deepseek-v4-pro"]
+            P_CODER["coder<br/>deepseek-v3.1"]
+            P_ANALYST["analyst<br/>kimi-k2.6"]
+            P_OPERATOR["operator<br/>kimi-k2.6"]
+            P_RESEARCHER["researcher<br/>qwen3.5"]
+            P_ADVISOR["advisor<br/>deepseek-v4-pro"]
+            P_TUTOR["tutor<br/>qwen3.5"]
+        end
+        
+        ROUTER["Hermes Router<br/>Skill → Model mapping<br/>Policy enforcement"]
+        
+        subgraph SKILL_LAYER["Skill Layer"]
+            direction LR
+            
+            subgraph CORE_SKILLS["Core Skills"]
+                S_DIAG["diagnostics<br/>analyst + kimi-k2.6"]
+                S_REM["remediation<br/>operator + kimi-k2.6"]
+                S_CODE["codegen<br/>coder + deepseek-v3.1"]
+                S_PLAN["planning<br/>architect + deepseek-v4"]
+                S_SUMM["summarisation<br/>researcher + qwen3.5"]
+            end
+            
+            subgraph DOMAIN_SKILLS["Domain Skills"]
+                S_EA["enterprise-architecture<br/>architect + deepseek-v4"]
+                S_VO["voxflow-operations<br/>operator + kimi-k2.6"]
+                S_IG["income-generation<br/>analyst + kimi-k2.6"]
+                S_MESH["hermes-mesh<br/>(vision)"]
+            end
+        end
+    end
+
+    subgraph MODEL_FABRIC["Model Fabric"]
+        direction LR
+        M_DSV4["DeepSeek v4 Pro<br/>32K tokens, temp 0.1"]
+        M_KK26["Kimi K2.6<br/>32K tokens, temp 0.2"]
+        M_QWEN["Qwen 3.5<br/>16K tokens, temp 0.2"]
+        M_DSV31["DeepSeek V3.1 671B<br/>32K tokens, temp 0.1"]
+        M_KK25["Kimi K2.5<br/>4K tokens, temp 0.2"]
+        M_GLM5["GLM-5<br/>16K tokens, temp 0.2"]
+        M_MINIMAX["MiniMax M2.7<br/>16K tokens, temp 0.2"]
+    end
+
+    subgraph VOXFLOW["VoxFlow / InfraForesight Platform"]
+        direction TB
+        VF_SERVICES["9 Microservices"]
+        VF_GATEWAY["Gateway<br/>Fastify + Redis + PG"]
+        VF_TENANT["Tenant Manager<br/>API keys, RBAC"]
+        VF_CALLCONTROL["Call Control<br/>SIP orchestration"]
+        VF_WHATSAPP["WhatsApp<br/>Business API"]
+        VF_RCS["RCS<br/>Rich Comms"]
+        VF_MEDIA["Media Processor<br/>FreeSWITCH"]
+        VF_QOS["QoS Classifier<br/>eBPF DSCP"]
+        VF_ANALYTICS["Analytics<br/>TimescaleDB"]
+        VF_BILLING["Billing<br/>Usage + Invoicing"]
+        
+        VF_INFRA["Multi-Cloud Infra<br/>AWS | Azure | GCP"]
+        VF_OBS["Observability<br/>Grafana | Vector | TimescaleDB"]
+    end
+
+    subgraph TOOLS["Tools & Integrations"]
+        direction LR
+        T_GITHUB["GitHub<br/>PRs, Actions"]
+        T_DOCKER["Docker<br/>Builds"]
+        T_PULUMI["Pulumi<br/>IaC"]
+        T_K8S["Kubernetes<br/>Orchestration"]
+        T_OLLAMA["Ollama<br/>Model Serving"]
+        T_EMAIL["Email<br/>Alerts"]
+    end
+
+    subgraph MESH_FABRIC["Hermes Mesh Fabric (Phase 4)"]
+        direction TB
+        MESH_NODES["Multi-Node Mesh"]
+        MESH_QUIC["QUIC Transport<br/>mTLS, 0-RTT"]
+        MESH_CRDT["CRDT State Store<br/>Conflict-free"]
+        MESH_ORCH["Agent Orchestrator<br/>Spawn | Route | Kill"]
+    end
+
+    subgraph POLICIES["Policy Enforcement"]
+        direction LR
+        POL_FMT["Format Policy<br/>Required headings"]
+        POL_SAFE["Safety Policy<br/>Temp, retries, filters"]
+        POL_REPRO["Reproducibility<br/>Pinned models, cache"]
+    end
+
+    subgraph PROFILES["Execution Profiles"]
+        direction LR
+        PROF_FAST["fast<br/>temp 0.2"]
+        PROF_DEEP["deep<br/>temp 0.1"]
+        PROF_SECURE["secure<br/>temp 0.0"]
+    end
+
+    %% Connections
+    CLI --> INTENT
+    TELEGRAM --> INTENT
+    CRON --> INTENT
+    WEB --> INTENT
+    API --> INTENT
+    
+    INTENT --> ROUTER
+    INTENT --> PERSONALITY_ENGINE
+    
+    ROUTER --> P_ARCHITECT
+    ROUTER --> P_CODER
+    ROUTER --> P_ANALYST
+    ROUTER --> P_OPERATOR
+    ROUTER --> P_RESEARCHER
+    ROUTER --> P_ADVISOR
+    ROUTER --> P_TUTOR
+    
+    P_ARCHITECT --> S_PLAN
+    P_ARCHITECT --> S_EA
+    P_CODER --> S_CODE
+    P_ANALYST --> S_DIAG
+    P_ANALYST --> S_IG
+    P_OPERATOR --> S_REM
+    P_OPERATOR --> S_VO
+    P_RESEARCHER --> S_SUMM
+    
+    S_PLAN --> M_DSV4
+    S_EA --> M_DSV4
+    S_CODE --> M_DSV31
+    S_DIAG --> M_KK26
+    S_REM --> M_KK26
+    S_VO --> M_KK26
+    S_IG --> M_KK26
+    S_SUMM --> M_QWEN
+    
+    ROUTER --> PROFILES
+    ROUTER --> POLICIES
+    
+    S_VO --> VOXFLOW
+    VF_SERVICES --> VF_INFRA
+    VF_SERVICES --> VF_OBS
+    
+    ROUTER --> TOOLS
+    
+    S_MESH --> MESH_FABRIC
+    MESH_FABRIC --> M_DSV4
+    
+    style HERMES_CORE fill:#1a1a2e,stroke:#e94560,color:#eee
+    style PERSONALITY_ENGINE fill:#16213e,stroke:#0f3460,color:#eee
+    style SKILL_LAYER fill:#16213e,stroke:#0f3460,color:#eee
+    style MODEL_FABRIC fill:#1a1a2e,stroke:#533483,color:#eee
+    style VOXFLOW fill:#1a1a2e,stroke:#e94560,color:#eee
+    style MESH_FABRIC fill:#1a1a2e,stroke:#e94560,color:#aaa
+    style ENTRYPOINTS fill:#16213e,stroke:#0f3460,color:#eee
+    style TOOLS fill:#16213e,stroke:#0f3460,color:#eee
+    style POLICIES fill:#16213e,stroke:#533483,color:#eee
+    style PROFILES fill:#16213e,stroke:#533483,color:#eee
