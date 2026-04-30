@@ -1,0 +1,72 @@
+# ============================================================
+#  Node Capabilities Registry — Hermes Mesh
+#  Auto-generated for current machine
+# ============================================================
+
+node:
+  id: "5ca68af9-749d-4296-903f-6e4ba574e1f7"
+  host: "vm1"
+  environment: "home"
+  type: "primary"
+
+  capabilities:
+    models:
+      # Ollama cloud models (primary)
+      - deepseek-v4-pro:cloud
+      - kimi-k2.6:cloud
+      - qwen3.5:cloud
+      - glm-5:cloud
+      - minimax-m2.7:cloud
+      - deepseek-v3.1:671b-cloud
+      - gemma4:31b-cloud
+      - kimi-k2.5:cloud
+      # Ollama local models
+      - phi3.5:latest
+      - wizardlm-uncensored:latest
+      # Embeddings
+      - nomic-embed-text:latest
+
+    tools:
+      - hermes-cli
+      - web
+
+    skills:
+      # Core Hermes skills (from hermes-ai-os/config/hermes/skills/)
+      - diagnostics
+      - remediation
+      - codegen
+      - planning
+      - summarisation
+      # Domain skills
+      - enterprise-architecture
+      - voxflow-operations
+      - income-generation
+      - hermes-mesh
+      # Extended skills (from ~/.claude/agents/ and ~/.hermes/config.yaml skills.external_dirs)
+      - workflow-orchestrator
+      - multi-agent-coordinator
+      - task-distributor
+      - knowledge-synthesizer
+      - context-manager
+      - performance-monitor
+      - codebase-orchestrator
+      - agent-organizer
+      - it-ops-orchestrator
+      - error-coordinator
+
+  resources:
+    cpu_cores: 6
+    memory_gb: 11
+    disk_gb: 193
+    gpu_available: false
+
+  mesh:
+    version: "1.0.0"
+    transport: "quic"
+    heartbeat_interval: "30s"
+
+# ============================================================
+#  DISCOVERY — Where this node looks for peers
+# ============================================================
+discovery_endpoints:
+  - http://localhost:9080/.well-known/hermes-mesh

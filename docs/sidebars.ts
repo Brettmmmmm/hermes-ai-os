@@ -42,6 +42,7 @@ export default {
         'domain-skills/enterprise-architecture',
         'domain-skills/voxflow-operations',
         'domain-skills/income-generation',
+        'domain-skills/hermes-mesh',
       ],
     },
     {

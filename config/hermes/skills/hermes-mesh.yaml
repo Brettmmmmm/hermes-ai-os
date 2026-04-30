@@ -1,0 +1,29 @@
+id: hermes-mesh
+name: "Hermes Mesh"
+description: "Multi-agent orchestration fabric — spawn, coordinate, and monitor autonomous agents across nodes"
+personality: architect
+model: ollama:deepseek-v4-pro:cloud
+policy:
+  format: "markdown"
+  structure:
+    - "Overview"
+    - "Architecture"
+    - "Core Concepts"
+    - "Node Capabilities Registry"
+    - "Agent Spawning Protocol"
+    - "CRDT State Store"
+    - "mTLS Security Model"
+    - "Integration with Current Hermes"
+    - "Phase Roadmap"
+    - "Verification"
+tags:
+  - mesh
+  - multi-agent
+  - orchestration
+  - distributed
+  - quic
+  - crdt
+  - mTLS
+  - agent-lifecycle
+domains:
+  - hermes-mesh
